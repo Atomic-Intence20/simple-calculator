@@ -23,7 +23,7 @@ Synchronous operation using a clock signal
 
 Reset functionality to initialize values
 
-Module Interface
+
 
 Inputs:
 
