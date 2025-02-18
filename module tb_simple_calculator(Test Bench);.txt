@@ -1,0 +1,64 @@
+module tb_simple_calculator;
+
+// Testbench signals
+reg [7:0] A;
+reg [7:0] B;
+reg [1:0] op;
+reg clk;
+reg reset;
+wire [15:0] result;
+wire done;
+
+// Instantiate the calculator
+simple_calculator uut (
+    .A(A),
+    .B(B),
+    .op(op),
+    .clk(clk),
+    .reset(reset),
+    .result(result),
+    .done(done)
+);
+
+// Clock generation
+initial begin
+    clk = 0;
+    forever #5 clk = ~clk; // Toggle clock every 5 time units
+end
+
+// Test sequence
+initial begin
+    // Reset the calculator
+    reset = 1; A = 0; B = 0; op = 0;
+    #10 reset = 0; // Release reset
+
+    // Test addition
+    A = 8'd15; B = 8'd10; op = 2'b00; // 15 + 10
+    #10; // Wait for operation to complete
+
+    // Test subtraction
+    A = 8'd20; B = 8'd5; op = 2'b01; // 20 - 5
+    #10; // Wait for operation to complete
+
+    // Test multiplication
+    A = 8'd7; B = 8'd6; op = 2'b10; // 7 * 6
+    #10; // Wait for operation to complete
+
+    // Test division
+    A = 8'd30; B = 8'd5; op = 2'b11; // 30 / 5
+    #10; // Wait for operation to complete
+
+    // Test division by zero
+    A = 8'd30; B = 8'd0; op = 2'b11; // 30 / 0
+    #10; // Wait for operation to complete
+
+    // Finish the simulation
+    $finish;
+end
+
+// Monitor results
+initial begin
+    $monitor("A = %d, B = %d, op = %b, result = %d, done = %b", A, B, op, result, done);
+end
+
+endmodule

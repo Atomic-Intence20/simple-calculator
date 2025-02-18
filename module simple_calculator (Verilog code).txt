@@ -1,0 +1,33 @@
+module simple_calculator (
+    input wire [7:0] A,        // First operand
+    input wire [7:0] B,        // Second operand
+    input wire [1:0] op,       // Operation select
+    input wire clk,            // Clock signal
+    input wire reset,          // Reset signal
+    output reg [15:0] result,  // Result of the operation
+    output reg done            // Done signal
+);
+
+// Sequential logic to set result and done signal
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        result <= 16'h0000;                      // Reset result
+        done <= 0;                              // Reset done signal
+    end else begin
+        case (op)
+            2'b00: result <= A + B;             // Addition
+            2'b01: result <= A - B;             // Subtraction
+            2'b10: result <= A * B;             // Multiplication
+            2'b11: begin
+                if (B != 0)
+                    result <= A / B;             // Division
+                else
+                    result <= 16'hFFFF;           // Handle division by zero
+            end
+            default: result <= 16'h0000;         // Default case
+        endcase
+        done <= 1;                               // Mark done
+    end
+end
+
+endmodule
