@@ -9,6 +9,7 @@ Supports four arithmetic operations:
 
 Addition (A + B)
 
+.
 Subtraction (A - B)
 
 Multiplication (A * B)
