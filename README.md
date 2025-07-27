@@ -62,4 +62,4 @@ The selected operation is executed based on the op input.
 
 If division by zero occurs, the module outputs 0xFFFF as an error indicator.
 
-Once an operation is completed, done is set to 1.
+Once an operation is completed, done is set to 1...
